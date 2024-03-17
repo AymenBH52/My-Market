@@ -13,7 +13,7 @@ export class AllProductsComponent implements OnInit{
   constructor(private service:ProductsService) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getProducts(); //Appel de la méthode getProducts() pour afficher les produits lors de lancemnt de l'application
     
   }
 
@@ -23,7 +23,12 @@ export class AllProductsComponent implements OnInit{
       
       //console.log(res);
       
-      this.products = res;})
+      this.products = res
+    }, error => {
+      console.log(error.message);
+
+    }
+      )
     }
       
 
