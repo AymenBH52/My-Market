@@ -10,12 +10,14 @@ export class AllProductsComponent implements OnInit{
  
   products: any[] = []; //Array pour stoker les produits
   categories: any[] = []; //Array pour stoker les catégories
+  loading: boolean = false; //Variable pour afficher le spinner lors de chargement des produits
 
   constructor(private service:ProductsService) { }
 
   ngOnInit(): void {
     this.getProducts(); //Appel de la méthode getProducts() pour afficher les produits lors de lancemnt de l'application
-    this.getCategories();
+
+    this.getCategories(); //Du meme pour les catégories
     
   }
 
@@ -23,13 +25,21 @@ export class AllProductsComponent implements OnInit{
   //) Récupérer tous les produits
 
   getProducts() {
+
+    this.loading = true; //Afficher le spinner lors de chargement des produits
+
     //Prendre les données depuis le backend et stoker dans l'array products
     this.service.getAllProducts().subscribe((res:any) => {
       
+      this.loading = false; //Cacher le spinner après la réponse de la requete (Affichage des produits)
+
       //console.log(res);
       
       this.products = res
     }, error => {
+
+      this.loading = false; //Cacher le spinner en cas d'erreur
+
       alert(error);
 
     })
@@ -39,12 +49,21 @@ export class AllProductsComponent implements OnInit{
     //Récupérer toutes les catégories
 
     getCategories() {
+
+      this.loading = true ; 
+
       this.service.getAllCategories().subscribe((res:any) => {
+
+        this.loading = false;
+
         // console.log(res);
 
         this.categories = res
 
       }, error => {
+
+        this.loading = false;
+
         alert(error)
       })
     }
@@ -70,7 +89,12 @@ export class AllProductsComponent implements OnInit{
 
     //Filtrer les produits par catégorie
     getProductsCategory(keyword: string) {
+
+      this.loading = true;
+
       this.service.getProductsByCategory(keyword).subscribe((res:any)=> {
+
+        this.loading = false;
 
         this.products = res
       })

@@ -13,7 +13,7 @@
 
     </div>
 
-    <div class="row" >
+    <div class="row" *ngIf="!loading" > <!-- loading = false -->
         <div class="col-md-3 col-sm-12" *ngFor="let prod of products">
     
             <div class="item">
@@ -34,6 +34,11 @@
             </div>
     
         </div>
+    </div>
+
+    <!-- Spinner -->
+    <div class="text-center w-100" *ngIf="loading"> <!-- loading = true -->
+        <app-spinner></app-spinner>
     </div>
     
 </div>
